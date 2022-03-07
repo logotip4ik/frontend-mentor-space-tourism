@@ -7,3 +7,34 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+.fade-enter-active.d-25,
+.fade-leave-active.d-25,
+.fade-enter-from.d-25,
+.fade-leave-to.d-25 {
+  transition-delay: 25ms;
+}
+.fade-enter-active.d-50,
+.fade-leave-active.d-50,
+.fade-enter-from.d-50,
+.fade-leave-to.d-50 {
+  transition-delay: 50ms;
+}
+.fade-enter-active.d-75,
+.fade-leave-active.d-75,
+.fade-enter-from.d-75,
+.fade-leave-to.d-75 {
+  transition-delay: 75ms;
+}
+.fade-enter-active.d-100,
+.fade-leave-active.d-100,
+.fade-enter-from.d-100,
+.fade-leave-to.d-100 {
+  transition-delay: 100ms;
+}
+.fade-enter-active.d-125,
+.fade-leave-active.d-125,
+.fade-enter-from.d-125,
+.fade-leave-to.d-125 {
+  transition-delay: 125ms;
+}
