@@ -20,15 +20,17 @@
       <span class="main__subheading__dark">01</span>&nbsp; Pick your destination
     </p>
 
-    <picture>
-      <source :srcset="destination.images.webp" type="image/webp" />
-      <img
-        :src="destination.images.png"
-        :aria-label="destination.name"
-        class="main__planet-image"
-        decoding="async"
-      />
-    </picture>
+    <Transition mode="out-in" name="fade">
+      <picture :key="currentDestinationIdx">
+        <source :srcset="destination.images.webp" type="image/webp" />
+        <img
+          :src="destination.images.png"
+          :aria-label="destination.name"
+          class="main__planet-image"
+          decoding="async"
+        />
+      </picture>
+    </Transition>
 
     <ul class="main__planet-selector">
       <li
@@ -45,25 +47,33 @@
       </li>
     </ul>
 
-    <h1 class="main__heading">
-      {{ destination.name }}
-    </h1>
+    <Transition mode="out-in" name="fade">
+      <h1 class="main__heading d-25" :key="currentDestinationIdx">
+        {{ destination.name }}
+      </h1>
+    </Transition>
 
-    <p class="main__description">
-      {{ destination.description }}
-    </p>
+    <Transition mode="out-in" name="fade">
+      <p class="main__description d-50" :key="currentDestinationIdx">
+        {{ destination.description }}
+      </p>
+    </Transition>
 
     <hr class="main__hr" />
 
     <ul class="main__info-list">
-      <li class="main__info-list__item">
-        <p class="main__info-list__item__heading">Avg. distance</p>
-        <p class="main__info-list__item__info">{{ destination.distance }}</p>
-      </li>
-      <li class="main__info-list__item">
-        <p class="main__info-list__item__heading">Est. travel time</p>
-        <p class="main__info-list__item__info">{{ destination.travel }}</p>
-      </li>
+      <Transition mode="out-in" name="fade">
+        <li class="main__info-list__item d-75" :key="currentDestinationIdx">
+          <p class="main__info-list__item__heading">Avg. distance</p>
+          <p class="main__info-list__item__info">{{ destination.distance }}</p>
+        </li>
+      </Transition>
+      <Transition mode="out-in" name="fade">
+        <li class="main__info-list__item d-100" :key="currentDestinationIdx">
+          <p class="main__info-list__item__heading">Est. travel time</p>
+          <p class="main__info-list__item__info">{{ destination.travel }}</p>
+        </li>
+      </Transition>
     </ul>
   </main>
 </template>
