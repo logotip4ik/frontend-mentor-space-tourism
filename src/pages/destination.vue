@@ -99,15 +99,11 @@ watch(currentDestinationIdx, (val) =>
 );
 
 onMounted(() => {
-  gsap.fromTo(
-    backgroundImage.value,
-    { y: -25 },
-    {
-      y: 25,
-      ease: "none",
-      scrollTrigger: { start: "top top", end: "max bottom", scrub: true },
-    }
-  );
+  gsap.to(backgroundImage.value, {
+    y: 50,
+    ease: "none",
+    scrollTrigger: { start: "top top", end: "max bottom", scrub: true },
+  });
 });
 
 const viewport = ["mobile", "tablet", "desktop"];

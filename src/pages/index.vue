@@ -10,6 +10,7 @@
         srcset="/home/background-home-tablet.jpg"
       />
       <img
+        ref="backgroundImage"
         src="/home/background-home-desktop.jpg"
         alt="earth"
         class="main__background-image"
@@ -34,7 +35,18 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import { useHead } from "@vueuse/head";
+import { gsap } from "gsap";
+
+const backgroundImage = ref(null);
+
+onMounted(() => {
+  gsap.to(backgroundImage.value, {
+    y: 50,
+    scrollTrigger: { scrub: true, start: "top top", end: "max bottom" },
+  });
+});
 
 useHead({ title: "Home | Space tourism website" });
 </script>
