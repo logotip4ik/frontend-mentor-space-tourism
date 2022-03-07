@@ -10,6 +10,7 @@
         srcset="/destination/background-destination-tablet.jpg"
       />
       <img
+        ref="backgroundImage"
         src="/destination/background-destination-desktop.jpg"
         alt="night sky"
         class="main__background-image"
@@ -79,23 +80,38 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 import { destinations } from "../assets/data.json";
 
 const route = useRoute();
 const router = useRouter();
+const backgroundImage = ref(null);
 const currentDestinationIdx = ref(route.query.planet || 0);
+
+const destination = computed(() => destinations[currentDestinationIdx.value]);
+
 watch(currentDestinationIdx, (val) =>
   router.replace({ path: "destination", query: { planet: val } })
 );
 
-const destination = computed(() => destinations[currentDestinationIdx.value]);
+onMounted(() => {
+  gsap.fromTo(
+    backgroundImage.value,
+    { y: -25 },
+    {
+      y: 25,
+      ease: "none",
+      scrollTrigger: { start: "top top", end: "max bottom", scrub: true },
+    }
+  );
+});
 
 const viewport = ["mobile", "tablet", "desktop"];
-
 useHead({
   title: computed(() => `${destination.value.name} | Space tourism website`),
   description: computed(() => destination.value.description),
@@ -143,6 +159,8 @@ useHead({
   background-color: #090f1b;
 
   &__background-image {
+    --max-y-offset: 25px;
+
     display: block;
 
     position: absolute;
