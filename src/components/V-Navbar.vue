@@ -25,6 +25,7 @@
           v-for="(link, key) in links"
           :key="key"
           class="nav__navigation__item"
+          @click="isMenuOpened = false"
         >
           <RouterLink :to="link.to" class="nav__navigation__item__link">
             {{ link.label }}
