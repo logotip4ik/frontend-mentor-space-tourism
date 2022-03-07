@@ -69,14 +69,18 @@
 </template>
 
 <script setup>
-import { ref, computed } from "@vue/reactivity";
-import { useRoute } from "vue-router";
+import { ref, computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
 
 import { destinations } from "../assets/data.json";
 
 const route = useRoute();
+const router = useRouter();
 const currentDestinationIdx = ref(route.query.planet || 0);
+watch(currentDestinationIdx, (val) =>
+  router.replace({ path: "destination", query: { planet: val } })
+);
 
 const destination = computed(() => destinations[currentDestinationIdx.value]);
 
@@ -84,6 +88,7 @@ const viewport = ["mobile", "tablet", "desktop"];
 
 useHead({
   title: computed(() => `${destination.value.name} | Space tourism website`),
+  description: computed(() => destination.value.description),
   link: [
     // preloading background image
     ...viewport.reduce(
