@@ -26,9 +26,9 @@
         experience!
       </p>
 
-      <button class="main__content__action">
+      <RouterLink class="main__content__action" to="/destination">
         <span class="main__content__action__text">Explore</span>
-      </button>
+      </RouterLink>
     </div>
   </main>
 </template>
@@ -114,6 +114,8 @@ useHead({ title: "Home | Space tourism website" });
       font-size: 1.125rem;
       letter-spacing: 1.25px;
       text-transform: uppercase;
+      text-decoration: none;
+      color: var(--c-black);
 
       appearance: none;
       border: none;
