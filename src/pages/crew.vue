@@ -193,25 +193,6 @@ useHead({
     }
   }
 
-  &__crew-image {
-    --size: 50.5%;
-
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    max-width: var(--size);
-
-    margin: 0;
-
-    &__wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-    }
-  }
-
   &__gallery {
     width: 100%;
 
