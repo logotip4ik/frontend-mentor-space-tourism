@@ -21,33 +21,29 @@
       <span class="main__subheading__dark">02</span>&nbsp; Meet your crew
     </p>
 
-    <Transition mode="out-in" name="fade">
-      <picture :key="currentPersonIdx" class="main__crew-image__wrapper">
-        <source :srcset="currentPerson.images.webp" type="image/webp" />
-        <img
-          :src="currentPerson.images.png"
-          :aria-label="currentPerson.name"
-          class="main__crew-image"
-          decoding="async"
-        />
-      </picture>
-    </Transition>
-
-    <hr class="main__hr" />
-
-    <!-- <TransitionGroup tag="ul" mode="out-in" name="fade" class="main__gallery">
-      <li v-for="(person, key) in crew" :key="key" class="main__gallery__item">
-        <picture>
+    <Splide
+      class="main__gallery"
+      :options="splideOptions"
+      @splide:move="handleSlideMove"
+    >
+      <SplideSlide
+        v-for="(person, key) in crew"
+        :key="key"
+        class="main__gallery__item"
+      >
+        <picture class="main__gallery__item__image__wrapper">
           <source :srcset="person.images.webp" type="image/webp" />
           <img
             :src="person.images.png"
             :aria-label="person.name"
-            class="main__gallery__item__crew-image"
+            class="main__gallery__item__image"
             decoding="async"
           />
         </picture>
-      </li>
-    </TransitionGroup> -->
+      </SplideSlide>
+    </Splide>
+
+    <hr class="main__hr" />
 
     <ul class="main__crew-selector">
       <li
@@ -83,10 +79,14 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
+import "@splidejs/splide/dist/css/splide.min.css";
+
+import { ref, computed, watch, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { gsap } from "gsap";
+
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
 
 import { crew } from "../assets/data.json";
 
@@ -94,8 +94,17 @@ const route = useRoute();
 const router = useRouter();
 const backgroundImage = ref(null);
 const currentPersonIdx = ref(route.query.person || 0);
+const splideOptions = reactive({
+  pagination: false,
+  arrows: false,
+  start: currentPersonIdx.value,
+});
 
 const currentPerson = computed(() => crew[currentPersonIdx.value]);
+
+function handleSlideMove(_, newIdx) {
+  if (newIdx !== currentPersonIdx.value) currentPersonIdx.value = newIdx;
+}
 
 watch(currentPersonIdx, (val) =>
   router.replace({ path: "crew", query: { person: val } })
@@ -183,7 +192,7 @@ useHead({
     text-transform: uppercase;
     color: var(--c-white);
 
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.9rem;
 
     &__dark {
       font-weight: 700;
@@ -213,30 +222,22 @@ useHead({
   &__hr {
     width: 100%;
 
-    margin: 0 0 1rem;
+    margin: 0 0 1.1rem;
     border-color: #383b4b;
   }
 
   &__gallery {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(4, 1fr);
-    // grid-te
-
-    width: 100%;
-
-    padding: 0;
-    list-style-type: none;
-    overflow-x: auto;
-
     &__item {
-      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
 
-      &__crew-image {
-        display: block;
+      &__image {
+        width: 50%;
 
-        width: 100%;
-        height: 100vh;
+        &__wrapper {
+          max-height: 218px;
+        }
       }
     }
   }
@@ -247,11 +248,11 @@ useHead({
     align-items: center;
 
     padding: 0;
-    margin-bottom: 0.75rem;
+    margin: 0.75rem 0 0.75rem;
     list-style-type: none;
 
     &__item {
-      --size: 0.5rem;
+      --size: 0.6rem;
 
       width: var(--size);
       height: var(--size);
@@ -259,7 +260,7 @@ useHead({
       border-radius: 50%;
       background-color: var(--c-white);
 
-      margin: 0 0.5rem;
+      margin: 0 0.4rem;
 
       opacity: 0.17;
       cursor: pointer;
