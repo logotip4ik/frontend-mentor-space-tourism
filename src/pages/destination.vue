@@ -21,17 +21,27 @@
       <span class="main__subheading__dark">01</span>&nbsp; Pick your destination
     </p>
 
-    <Transition mode="out-in" name="fade">
-      <picture :key="currentDestinationIdx">
-        <source :srcset="destination.images.webp" type="image/webp" />
-        <img
-          :src="destination.images.png"
-          :aria-label="destination.name"
-          class="main__planet-image"
-          decoding="async"
-        />
-      </picture>
-    </Transition>
+    <Swiper
+      class="main__gallery"
+      @swiper="swiper = $event"
+      @slide-change="currentDestinationIdx = $event.activeIndex"
+    >
+      <SwiperSlide
+        v-for="(planet, key) in destinations"
+        :key="key"
+        class="main__gallery__item"
+      >
+        <picture class="main__gallery__item__image__wrapper">
+          <source :srcset="planet.images.webp" type="image/webp" />
+          <img
+            :src="planet.images.png"
+            :aria-label="planet.name"
+            class="main__gallery__item__image"
+            decoding="async"
+          />
+        </picture>
+      </SwiperSlide>
+    </Swiper>
 
     <ul class="main__planet-selector">
       <li
@@ -84,19 +94,22 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { gsap } from "gsap";
+import { Swiper, SwiperSlide } from "swiper/vue";
 
 import { destinations } from "../assets/data.json";
 
 const route = useRoute();
 const router = useRouter();
+const swiper = ref();
 const backgroundImage = ref(null);
 const currentDestinationIdx = ref(route.query.planet || 0);
 
 const destination = computed(() => destinations[currentDestinationIdx.value]);
 
-watch(currentDestinationIdx, (val) =>
-  router.replace({ path: "destination", query: { planet: val } })
-);
+watch(currentDestinationIdx, (val) => {
+  router.replace({ path: "destination", query: { planet: val } });
+  swiper.value.slideTo(val);
+});
 
 onMounted(() => {
   gsap.to(backgroundImage.value, {
@@ -104,6 +117,8 @@ onMounted(() => {
     ease: "none",
     scrollTrigger: { start: "top top", end: "max bottom", scrub: true },
   });
+
+  swiper.value.slideTo(currentDestinationIdx.value, 0);
 });
 
 const viewport = ["mobile", "tablet", "desktop"];
@@ -184,17 +199,32 @@ useHead({
     }
   }
 
-  &__planet-image {
-    --size: 170px;
-    display: block;
-
+  &__gallery {
     width: 100%;
-    height: 100vh;
-
-    max-width: var(--size);
-    max-height: var(--size);
-
     margin-bottom: 0.5rem;
+
+    &__item {
+      text-align: center;
+      margin-top: auto;
+
+      &__image {
+        --size: 170px;
+
+        display: block;
+
+        width: 100%;
+        height: auto;
+
+        max-width: var(--size);
+        max-height: var(--size);
+
+        &__wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
   }
 
   &__planet-selector {
