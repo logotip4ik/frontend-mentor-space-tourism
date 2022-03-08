@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@splidejs/vue-splide": "^0.5.18",
     "gsap": "^3.9.1",
     "normalize.css": "^8.0.1",
+    "swiper": "^8.0.7",
     "vue": "^3.2.25"
   },
   "devDependencies": {
