@@ -100,7 +100,7 @@ function closeMenu(el, onComplete) {
     @media screen and (min-width: #{$breakpoint-tablet}) {
       margin-top: 0.25rem;
 
-      max-width: 50px;
+      max-width: 55px;
     }
   }
 
