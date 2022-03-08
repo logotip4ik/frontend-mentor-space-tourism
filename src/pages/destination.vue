@@ -133,17 +133,30 @@ useHead({
   background-color: #090f1b;
 
   &__subheading {
+    display: block;
+
     font-family: "Barlow Condensed", sans-serif;
     font-size: 0.9rem;
     letter-spacing: 2.7px;
     text-transform: uppercase;
     color: var(--c-white);
 
+    width: 100%;
+
     margin-bottom: 1.8rem;
 
     &__dark {
       font-weight: 700;
       opacity: 0.25;
+    }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 1.1rem;
+      text-align: left;
+      letter-spacing: 3.5px;
+
+      margin-top: 0.5rem;
+      margin-bottom: 3.5rem;
     }
   }
 
@@ -171,7 +184,15 @@ useHead({
           justify-content: center;
           align-items: center;
         }
+
+        @media screen and (min-width: #{$breakpoint-tablet}) {
+          --size: 43%;
+        }
       }
+    }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      margin-bottom: 2.125rem;
     }
   }
 
@@ -230,6 +251,12 @@ useHead({
       &--active::after {
         opacity: 1;
       }
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 1rem;
+
+        margin: 0 0.85rem 0.85rem;
+      }
     }
   }
 
@@ -239,6 +266,12 @@ useHead({
     font-size: 3.1rem;
 
     margin: 0;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 4.25rem;
+
+      margin-bottom: 0.5rem;
+    }
   }
 
   &__description {
@@ -249,6 +282,14 @@ useHead({
 
     margin-top: 0;
     margin-bottom: 1.25rem;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 0.9rem;
+
+      max-width: 81%;
+
+      margin-bottom: 2.25rem;
+    }
   }
 
   &__hr {
@@ -256,13 +297,18 @@ useHead({
 
     margin-bottom: 1rem;
     border-color: #383b4b;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      max-width: 82%;
+
+      margin-bottom: 0.8rem;
+    }
   }
 
   &__info-list {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: repeat(2, fit-content);
+    grid-auto-flow: row;
 
     padding: 0;
     margin: 0;
@@ -288,6 +334,15 @@ useHead({
         margin: 0;
       }
     }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      grid-auto-flow: column;
+      gap: 5.75rem;
+    }
+  }
+
+  @media screen and (min-width: #{$breakpoint-tablet}) {
+    padding: 7rem 2.125rem 1rem;
   }
 }
 </style>
