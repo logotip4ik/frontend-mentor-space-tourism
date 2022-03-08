@@ -1,22 +1,6 @@
 <template>
   <main class="main">
-    <picture>
-      <source
-        :media="`(min-width: ${breakpoints.DESKTOP}px)`"
-        srcset="/technology/background-technology-desktop.jpg"
-      />
-      <source
-        :media="`(min-width: ${breakpoints.TABLET}px)`"
-        srcset="/technology/background-technology-tablet.jpg"
-      />
-      <img
-        ref="backgroundImage"
-        src="/technology/background-technology-mobile.jpg"
-        alt="night sky"
-        decoding="async"
-        class="main__background-image"
-      />
-    </picture>
+    <VBackground name="technology" alt="night sky"></VBackground>
 
     <p class="main__subheading">
       <span class="main__subheading__dark">03</span>&nbsp; Space launch 101
@@ -79,18 +63,17 @@
 import { ref, computed, watch, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
-import { gsap } from "gsap";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 
-import { breakpoints } from "../helpers/constants";
 import { technology } from "../assets/data.json";
+
+import VBackground from "../components/V-Background.vue";
 
 const route = useRoute();
 const router = useRouter();
 
 const swiper = ref();
-const backgroundImage = ref(null);
 const currentTechIdx = ref(route.query.tech || 0);
 
 const currentTech = computed(() => technology[currentTechIdx.value]);
@@ -101,46 +84,20 @@ watch(currentTechIdx, (val) => {
 });
 
 onMounted(() => {
-  gsap.fromTo(
-    backgroundImage.value,
-    { y: -25 },
-    {
-      y: 25,
-      ease: "none",
-      scrollTrigger: { start: "top top", end: "max bottom", scrub: true },
-    }
-  );
-
   swiper.value.slideTo(currentTechIdx.value, 0);
 });
 
-const viewport = ["mobile", "tablet", "desktop"];
 useHead({
   title: computed(() => `${currentTech.value.name} | Space tourism website`),
   description: computed(() => currentTech.value.description),
-  link: [
-    // preloading background image
-    ...viewport.reduce(
-      (acc, size) => [
-        ...acc,
-        {
-          rel: "preload",
-          as: "image",
-          href: `/technology/background-technology-${size}.jpg`,
-        },
-      ],
-      []
-    ),
-    // preloading planets images
-    ...technology.reduce(
-      (acc, item) => [
-        ...acc,
-        { rel: "preload", as: "image", href: item.images.portrait },
-        { rel: "preload", as: "image", href: item.images.landscape },
-      ],
-      []
-    ),
-  ],
+  link: technology.reduce(
+    (acc, item) => [
+      ...acc,
+      { rel: "preload", as: "image", href: item.images.portrait },
+      { rel: "preload", as: "image", href: item.images.landscape },
+    ],
+    []
+  ),
 });
 </script>
 
@@ -161,22 +118,6 @@ useHead({
 
   padding: 4rem 0 1rem;
   background-color: #090f1b;
-
-  &__background-image {
-    --max-y-offset: 25px;
-
-    display: block;
-
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-  }
 
   &__subheading {
     font-family: "Barlow Condensed", sans-serif;

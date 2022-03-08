@@ -1,22 +1,6 @@
 <template>
   <main class="main">
-    <picture>
-      <source
-        :media="`(min-width: ${breakpoints.DESKTOP}px)`"
-        srcset="/home/background-home-desktop.jpg"
-      />
-      <source
-        :media="`(min-width: ${breakpoints.TABLET}px)`"
-        srcset="/home/background-home-tablet.jpg"
-      />
-      <img
-        ref="backgroundImage"
-        src="/home/background-home-mobile.jpg"
-        alt="earth"
-        decoding="async"
-        class="main__background-image"
-      />
-    </picture>
+    <VBackground name="home" alt="earth"></VBackground>
 
     <div class="main__content">
       <p class="main__content__subheading">So, you want to travel to</p>
@@ -36,20 +20,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { useHead } from "@vueuse/head";
-import { gsap } from "gsap";
 
-import { breakpoints } from "../helpers/constants";
-
-const backgroundImage = ref(null);
-
-onMounted(() => {
-  gsap.to(backgroundImage.value, {
-    y: 50,
-    scrollTrigger: { scrub: true, start: "top top", end: "max bottom" },
-  });
-});
+import VBackground from "../components/V-Background.vue";
 
 useHead({ title: "Home | Space tourism website" });
 </script>
@@ -62,20 +35,6 @@ useHead({ title: "Home | Space tourism website" });
   height: 100%;
 
   background-color: var(--c-black);
-
-  &__background-image {
-    display: block;
-
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-    object-position: center center;
-  }
 
   &__content {
     display: flex;

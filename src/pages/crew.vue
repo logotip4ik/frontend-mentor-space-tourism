@@ -1,22 +1,6 @@
 <template>
   <main class="main">
-    <picture>
-      <source
-        :media="`(min-width: ${breakpoints.DESKTOP}px)`"
-        srcset="/crew/background-crew-desktop.jpg"
-      />
-      <source
-        :media="`(min-width: ${breakpoints.TABLET}px)`"
-        srcset="/crew/background-crew-tablet.jpg"
-      />
-      <img
-        ref="backgroundImage"
-        src="/crew/background-crew-mobile.jpg"
-        alt="earth"
-        decoding="async"
-        class="main__background-image"
-      />
-    </picture>
+    <VBackground name="crew" alt="earth"></VBackground>
 
     <p class="main__subheading">
       <span class="main__subheading__dark">02</span>&nbsp; Meet your crew
@@ -83,17 +67,16 @@
 import { ref, computed, watch, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
-import { gsap } from "gsap";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 
-import { breakpoints } from "../helpers/constants";
 import { crew } from "../assets/data.json";
+
+import VBackground from "../components/V-Background.vue";
 
 const route = useRoute();
 const router = useRouter();
 const swiper = ref();
-const backgroundImage = ref(null);
 const currentPersonIdx = ref(route.query.person || 0);
 
 const currentPerson = computed(() => crew[currentPersonIdx.value]);
@@ -104,45 +87,20 @@ watch(currentPersonIdx, (val) => {
 });
 
 onMounted(() => {
-  gsap.fromTo(
-    backgroundImage.value,
-    { y: -25 },
-    {
-      y: 25,
-      ease: "none",
-      scrollTrigger: { start: "top top", end: "max bottom", scrub: true },
-    }
-  );
-
   swiper.value.slideTo(currentPersonIdx.value, 0);
 });
 
-const viewport = ["mobile", "tablet", "desktop"];
 useHead({
   title: computed(() => `${currentPerson.value.name} | Space tourism website`),
   description: computed(() => currentPerson.value.description),
-  link: [
-    // preloading background image
-    ...viewport.reduce(
-      (acc, size) => [
-        ...acc,
-        {
-          rel: "preload",
-          as: "image",
-          href: `/crew/background-crew-${size}.jpg`,
-        },
-      ],
-      []
-    ),
-    // preloading planets images
-    ...crew.reduce(
-      (acc, item) => [
-        ...acc,
-        { rel: "preload", as: "image", href: item.images.webp },
-      ],
-      []
-    ),
-  ],
+  // preloading planets images
+  link: crew.reduce(
+    (acc, item) => [
+      ...acc,
+      { rel: "preload", as: "image", href: item.images.webp },
+    ],
+    []
+  ),
 });
 </script>
 
@@ -163,22 +121,6 @@ useHead({
 
   padding: 4rem 1.5rem 1rem;
   background-color: #090f1b;
-
-  &__background-image {
-    --max-y-offset: 25px;
-
-    display: block;
-
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-  }
 
   &__subheading {
     font-family: "Barlow Condensed", sans-serif;
