@@ -10,8 +10,14 @@ export default function useWindowWidth(initialWidth = 375) {
 
   const setWidth = () => (width.value = window.innerWidth);
 
-  onMounted(() => window.addEventListener("resize", setWidth));
-  onUpdated(() => window.addEventListener("resize", setWidth));
+  onMounted(() => {
+    width.value = window.innerWidth;
+    window.addEventListener("resize", setWidth);
+  });
+  onUpdated(() => {
+    width.value = window.innerWidth;
+    window.addEventListener("resize", setWidth);
+  });
   onBeforeUpdate(() => window.removeEventListener("resize", setWidth));
   onUnmounted(() => window.removeEventListener("resize", setWidth));
 
