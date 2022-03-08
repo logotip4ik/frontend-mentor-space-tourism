@@ -1,3 +1,4 @@
+import "@splidejs/splide/dist/css/splide.min.css";
 import "normalize.css/normalize.css";
 import "./assets/styles/global.css";
 import "./assets/styles/transitions.css";
