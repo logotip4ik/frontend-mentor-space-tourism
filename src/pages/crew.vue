@@ -21,13 +21,12 @@
       <span class="main__subheading__dark">02</span>&nbsp; Meet your crew
     </p>
 
-    <Splide
+    <Swiper
       class="main__gallery"
-      ref="splideInstance"
-      :options="splideOptions"
-      @splide:move="handleSlideMove"
+      @swiper="swiper = $event"
+      @slide-change="handleSlideMove"
     >
-      <SplideSlide
+      <SwiperSlide
         v-for="(person, key) in crew"
         :key="key"
         class="main__gallery__item"
@@ -41,8 +40,8 @@
             decoding="async"
           />
         </picture>
-      </SplideSlide>
-    </Splide>
+      </SwiperSlide>
+    </Swiper>
 
     <hr class="main__hr" />
 
@@ -85,30 +84,26 @@ import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { gsap } from "gsap";
 
-import { Splide, SplideSlide } from "@splidejs/vue-splide";
+import { Swiper, SwiperSlide } from "swiper/vue";
 
 import { crew } from "../assets/data.json";
 
 const route = useRoute();
 const router = useRouter();
-const splideInstance = ref(null);
+const swiper = ref();
 const backgroundImage = ref(null);
 const currentPersonIdx = ref(route.query.person || 0);
-const splideOptions = {
-  pagination: false,
-  arrows: false,
-  start: currentPersonIdx.value,
-};
 
 const currentPerson = computed(() => crew[currentPersonIdx.value]);
 
-function handleSlideMove(_, newIdx) {
-  if (newIdx !== currentPersonIdx.value) currentPersonIdx.value = newIdx;
+function handleSlideMove({ activeIndex }) {
+  if (activeIndex !== currentPersonIdx.value)
+    currentPersonIdx.value = activeIndex;
 }
 
 watch(currentPersonIdx, (val) => {
   router.replace({ path: "crew", query: { person: val } });
-  splideInstance.value.go(val);
+  swiper.value.slideTo(val);
 });
 
 onMounted(() => {
@@ -121,6 +116,8 @@ onMounted(() => {
       scrollTrigger: { start: "top top", end: "max bottom", scrub: true },
     }
   );
+
+  swiper.value.slideTo(currentPersonIdx.value, 0);
 });
 
 const viewport = ["mobile", "tablet", "desktop"];
@@ -193,7 +190,7 @@ useHead({
     text-transform: uppercase;
     color: var(--c-white);
 
-    margin-bottom: 1.9rem;
+    margin-bottom: 0.85rem;
 
     &__dark {
       font-weight: 700;
@@ -220,27 +217,35 @@ useHead({
     }
   }
 
+  &__gallery {
+    width: 100%;
+
+    &__item {
+      margin-top: auto;
+
+      &__image {
+        display: block;
+
+        width: 50%;
+        height: auto;
+
+        max-width: 100%;
+        max-height: 100%;
+
+        &__wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+        }
+      }
+    }
+  }
+
   &__hr {
     width: 100%;
 
     margin: 0 0 1.1rem;
     border-color: #383b4b;
-  }
-
-  &__gallery {
-    &__item {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-
-      &__image {
-        width: 50%;
-
-        &__wrapper {
-          max-height: 218px;
-        }
-      }
-    }
   }
 
   &__crew-selector {
