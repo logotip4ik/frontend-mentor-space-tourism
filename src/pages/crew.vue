@@ -24,7 +24,7 @@
     <Swiper
       class="main__gallery"
       @swiper="swiper = $event"
-      @slide-change="handleSlideMove"
+      @slide-change="currentPersonIdx = $event.activeIndex"
     >
       <SwiperSlide
         v-for="(person, key) in crew"
@@ -95,11 +95,6 @@ const backgroundImage = ref(null);
 const currentPersonIdx = ref(route.query.person || 0);
 
 const currentPerson = computed(() => crew[currentPersonIdx.value]);
-
-function handleSlideMove({ activeIndex }) {
-  if (activeIndex !== currentPersonIdx.value)
-    currentPersonIdx.value = activeIndex;
-}
 
 watch(currentPersonIdx, (val) => {
   router.replace({ path: "crew", query: { person: val } });
