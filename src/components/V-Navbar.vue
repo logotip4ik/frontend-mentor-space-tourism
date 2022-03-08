@@ -167,7 +167,7 @@ function closeMenu(el, onComplete) {
         text-decoration: none;
         text-transform: uppercase;
 
-        &.router-link-active::after {
+        &::after {
           --pd-y: 5px;
 
           content: "";
@@ -178,7 +178,9 @@ function closeMenu(el, onComplete) {
           bottom: calc(var(--pd-y) * -1);
           width: 3px;
 
+          opacity: 0;
           background-color: var(--c-white);
+          transition: opacity 300ms;
 
           @media screen and (min-width: #{$breakpoint-tablet}) {
             top: unset;
@@ -188,6 +190,14 @@ function closeMenu(el, onComplete) {
             width: 100%;
             height: 3px;
           }
+        }
+
+        &:is(:focus, :hover)::after {
+          opacity: 0.5;
+        }
+
+        &.router-link-active::after {
+          opacity: 1;
         }
       }
 
