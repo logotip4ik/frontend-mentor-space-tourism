@@ -23,6 +23,7 @@
 
     <Splide
       class="main__gallery"
+      ref="splideInstance"
       :options="splideOptions"
       @splide:move="handleSlideMove"
     >
@@ -79,8 +80,6 @@
 </template>
 
 <script setup>
-import "@splidejs/splide/dist/css/splide.min.css";
-
 import { ref, computed, watch, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
@@ -92,13 +91,14 @@ import { crew } from "../assets/data.json";
 
 const route = useRoute();
 const router = useRouter();
+const splideInstance = ref(null);
 const backgroundImage = ref(null);
 const currentPersonIdx = ref(route.query.person || 0);
-const splideOptions = reactive({
+const splideOptions = {
   pagination: false,
   arrows: false,
   start: currentPersonIdx.value,
-});
+};
 
 const currentPerson = computed(() => crew[currentPersonIdx.value]);
 
@@ -106,9 +106,10 @@ function handleSlideMove(_, newIdx) {
   if (newIdx !== currentPersonIdx.value) currentPersonIdx.value = newIdx;
 }
 
-watch(currentPersonIdx, (val) =>
-  router.replace({ path: "crew", query: { person: val } })
-);
+watch(currentPersonIdx, (val) => {
+  router.replace({ path: "crew", query: { person: val } });
+  splideInstance.value.go(val);
+});
 
 onMounted(() => {
   gsap.fromTo(
