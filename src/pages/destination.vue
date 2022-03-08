@@ -2,17 +2,18 @@
   <main class="main">
     <picture>
       <source
-        media="(max-width: 430px)"
-        srcset="/destination/background-destination-mobile.jpg"
+        :media="`(min-width: ${breakpoints.DESKTOP}px)`"
+        srcset="/destination/background-destination-desktop.jpg"
       />
       <source
-        media="(max-width: 768px)"
+        :media="`(min-width: ${breakpoints.TABLET}px)`"
         srcset="/destination/background-destination-tablet.jpg"
       />
       <img
         ref="backgroundImage"
-        src="/destination/background-destination-desktop.jpg"
+        src="/destination/background-destination-mobile.jpg"
         alt="night sky"
+        decoding="async"
         class="main__background-image"
       />
     </picture>
@@ -96,6 +97,7 @@ import { useHead } from "@vueuse/head";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
+import { breakpoints } from "../helpers/constants";
 import { destinations } from "../assets/data.json";
 
 const route = useRoute();

@@ -2,17 +2,18 @@
   <main class="main">
     <picture>
       <source
-        media="(max-width: 430px)"
-        srcset="/crew/background-crew-mobile.jpg"
+        :media="`(min-width: ${breakpoints.DESKTOP}px)`"
+        srcset="/crew/background-crew-desktop.jpg"
       />
       <source
-        media="(max-width: 768px)"
+        :media="`(min-width: ${breakpoints.TABLET}px)`"
         srcset="/crew/background-crew-tablet.jpg"
       />
       <img
         ref="backgroundImage"
-        src="/crew/background-crew-desktop.jpg"
-        alt="night sky"
+        src="/crew/background-crew-mobile.jpg"
+        alt="earth"
+        decoding="async"
         class="main__background-image"
       />
     </picture>
@@ -86,6 +87,7 @@ import { gsap } from "gsap";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 
+import { breakpoints } from "../helpers/constants";
 import { crew } from "../assets/data.json";
 
 const route = useRoute();

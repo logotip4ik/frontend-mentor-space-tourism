@@ -2,19 +2,19 @@
   <main class="main">
     <picture>
       <source
-        media="(max-width: 430px)"
-        srcset="/technology/background-technology-mobile.jpg"
+        :media="`(min-width: ${breakpoints.DESKTOP}px)`"
+        srcset="/technology/background-technology-desktop.jpg"
       />
       <source
-        media="(max-width: 768px)"
+        :media="`(min-width: ${breakpoints.TABLET}px)`"
         srcset="/technology/background-technology-tablet.jpg"
       />
       <img
         ref="backgroundImage"
-        src="/technology/background-technology-desktop.jpg"
+        src="/technology/background-technology-mobile.jpg"
         alt="night sky"
-        class="main__background-image"
         decoding="async"
+        class="main__background-image"
       />
     </picture>
 
@@ -83,6 +83,7 @@ import { gsap } from "gsap";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 
+import { breakpoints } from "../helpers/constants";
 import { technology } from "../assets/data.json";
 
 const route = useRoute();

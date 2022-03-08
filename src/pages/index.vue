@@ -2,17 +2,18 @@
   <main class="main">
     <picture>
       <source
-        media="(max-width: 430px)"
-        srcset="/home/background-home-mobile.jpg"
+        :media="`(min-width: ${breakpoints.DESKTOP}px)`"
+        srcset="/home/background-home-desktop.jpg"
       />
       <source
-        media="(max-width: 768px)"
+        :media="`(min-width: ${breakpoints.TABLET}px)`"
         srcset="/home/background-home-tablet.jpg"
       />
       <img
         ref="backgroundImage"
-        src="/home/background-home-desktop.jpg"
+        src="/home/background-home-mobile.jpg"
         alt="earth"
+        decoding="async"
         class="main__background-image"
       />
     </picture>
@@ -38,6 +39,8 @@
 import { ref, onMounted } from "vue";
 import { useHead } from "@vueuse/head";
 import { gsap } from "gsap";
+
+import { breakpoints } from "../helpers/constants";
 
 const backgroundImage = ref(null);
 
