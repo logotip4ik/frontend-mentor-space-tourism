@@ -32,8 +32,6 @@ useHead({ title: "Home | Space tourism website" });
   position: relative;
   z-index: 0;
 
-  height: 100%;
-
   background-color: var(--c-black);
 
   &__content {
@@ -42,7 +40,7 @@ useHead({ title: "Home | Space tourism website" });
     align-items: center;
     flex-direction: column;
 
-    min-height: 100%;
+    min-height: 100vh;
 
     color: white;
     text-align: center;
@@ -53,9 +51,17 @@ useHead({ title: "Home | Space tourism website" });
       font-family: "Barlow Condensed", sans-serif;
       font-size: 0.9rem;
       text-transform: uppercase;
+      text-align: center;
       letter-spacing: 2.7px;
 
       margin-bottom: 1.5rem;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 1.125rem;
+        letter-spacing: 3.1px;
+
+        margin-bottom: 1rem;
+      }
     }
 
     &__heading {
@@ -63,6 +69,12 @@ useHead({ title: "Home | Space tourism website" });
 
       text-transform: uppercase;
       margin: 0 0 0.25rem;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 8.1rem;
+
+        margin: 0;
+      }
     }
 
     &__info {
@@ -71,8 +83,18 @@ useHead({ title: "Home | Space tourism website" });
       color: var(--c-pink);
       font-size: 0.84rem;
       line-height: 1.65;
+      text-align: center;
 
       margin-bottom: 4.5rem;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 0.9rem;
+        line-height: 1.75;
+
+        max-width: 63%;
+
+        margin-bottom: 8.5rem;
+      }
     }
 
     &__action {
@@ -102,6 +124,16 @@ useHead({ title: "Home | Space tourism website" });
       max-height: var(--size);
 
       background-color: var(--c-white);
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        --size: 240px;
+
+        font-size: 1.8rem;
+      }
+    }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      padding-top: 10rem;
     }
   }
 }
