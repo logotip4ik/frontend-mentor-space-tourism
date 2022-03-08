@@ -20,7 +20,10 @@
       </Transition>
     </button>
     <Transition :css="false" @enter="showMenu" @leave="closeMenu">
-      <ul v-show="isMenuOpened" class="nav__navigation">
+      <ul
+        v-show="isMenuOpened || width >= breakpoints.TABLET"
+        class="nav__navigation"
+      >
         <li
           v-for="(link, key) in links"
           :key="key"
@@ -37,13 +40,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { gsap } from "gsap";
+
+import useWindowWidth from "../hooks/useWindowWidth";
+import { breakpoints } from "../helpers/constants";
 
 import LogoSVG from "../assets/img/logo.svg";
 import HamburgerSVG from "../assets/img/icon-hamburger.svg";
 import CloseSVG from "../assets/img/icon-close.svg";
 
+const [width] = useWindowWidth();
 const isMenuOpened = ref(false);
 
 const links = [
@@ -89,6 +96,12 @@ function closeMenu(el, onComplete) {
     width: 100%;
     max-width: 40px;
     height: auto;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      margin-top: 0.25rem;
+
+      max-width: 50px;
+    }
   }
 
   &__menu-button {
@@ -99,6 +112,10 @@ function closeMenu(el, onComplete) {
 
     background: transparent;
     cursor: pointer;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      display: none;
+    }
   }
 
   &__navigation {
@@ -162,6 +179,15 @@ function closeMenu(el, onComplete) {
           width: 3px;
 
           background-color: var(--c-white);
+
+          @media screen and (min-width: #{$breakpoint-tablet}) {
+            top: unset;
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 3px;
+          }
         }
       }
 
@@ -176,8 +202,48 @@ function closeMenu(el, onComplete) {
 
         content: "0" counter(list-item) "  ";
         counter-increment: list-item;
+
+        @media screen and (min-width: #{$breakpoint-tablet}) {
+          content: none;
+        }
+      }
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 0.78rem;
+        line-height: 6.7;
+        text-align: center;
+        letter-spacing: 2.3625px;
+
+        margin: 0;
+        padding: 0 0.9rem;
+
+        &:first-of-type {
+          margin-left: 0;
+        }
+        &:last-of-type {
+          margin-right: 0;
+        }
       }
     }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+
+      position: static;
+
+      width: auto;
+      height: auto;
+
+      padding: 0 2rem 0;
+    }
+  }
+
+  @media screen and (min-width: #{$breakpoint-tablet}) {
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 2rem;
   }
 }
 </style>
