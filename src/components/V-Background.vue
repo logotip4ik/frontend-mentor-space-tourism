@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useHead } from "@vueuse/head";
 import { gsap } from "gsap";
 
