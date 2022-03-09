@@ -110,7 +110,7 @@ useHead({ title: "Home | Space tourism website" });
 
         max-width: 63%;
 
-        margin-bottom: 8.5rem;
+        margin-bottom: 5.5rem;
         margin-left: auto;
         margin-right: auto;
       }
