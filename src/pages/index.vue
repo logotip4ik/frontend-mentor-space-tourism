@@ -13,8 +13,8 @@
       </p>
     </div>
 
-    <RouterLink class="main__content__action" to="/destination">
-      <span class="main__content__action__text">Explore</span>
+    <RouterLink class="main__action" to="/destination">
+      <span class="main__action__text">Explore</span>
     </RouterLink>
   </main>
 </template>
@@ -65,6 +65,14 @@ useHead({ title: "Home | Space tourism website" });
 
         margin-bottom: 1rem;
       }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        font-size: 1.6rem;
+        text-align: left;
+        letter-spacing: 4.6px;
+
+        margin-bottom: 1.5rem;
+      }
     }
 
     &__heading {
@@ -77,6 +85,12 @@ useHead({ title: "Home | Space tourism website" });
         font-size: 8.1rem;
 
         margin: 0;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        text-align: left;
+
+        margin-bottom: 1.4rem;
       }
     }
 
@@ -97,47 +111,77 @@ useHead({ title: "Home | Space tourism website" });
         max-width: 63%;
 
         margin-bottom: 8.5rem;
+        margin-left: auto;
+        margin-right: auto;
       }
-    }
 
-    &__action {
-      --size: 150px;
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        font-size: 1rem;
+        line-height: 1.78;
+        text-align: left;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        max-width: 53%;
 
-      position: relative;
-
-      font-family: "Bellefair", serif;
-      font-size: 1.1rem;
-      letter-spacing: 1.25px;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--c-black);
-
-      appearance: none;
-      border: none;
-      border-radius: 50%;
-
-      width: 100%;
-      height: 100vh;
-
-      max-width: var(--size);
-      max-height: var(--size);
-
-      background-color: var(--c-white);
-
-      @media screen and (min-width: #{$breakpoint-tablet}) {
-        --size: 240px;
-
-        font-size: 1.8rem;
+        margin-bottom: 0;
+        margin-left: unset;
+        margin-right: unset;
       }
     }
 
     @media screen and (min-width: #{$breakpoint-tablet}) {
       padding-top: 10rem;
     }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      padding: 0;
+    }
+  }
+
+  &__action {
+    --size: 150px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    font-family: "Bellefair", serif;
+    font-size: 1.1rem;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--c-black);
+
+    appearance: none;
+    border: none;
+    border-radius: 50%;
+
+    width: 100%;
+    height: 100vh;
+
+    max-width: var(--size);
+    max-height: var(--size);
+
+    background-color: var(--c-white);
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      --size: 240px;
+
+      font-size: 1.8rem;
+    }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      --size: min(19vw, 270px);
+    }
+  }
+
+  @media screen and (min-width: #{$breakpoint-desktop}) {
+    align-items: flex-end;
+    flex-direction: row;
+
+    // padding: 0 9.1rem 8.9rem;
+    padding: 0 11.5vw 8.9rem;
   }
 }
 </style>
