@@ -165,6 +165,29 @@ useHead({ title: "Home | Space tourism website" });
 
     background-color: var(--c-white);
 
+    &::after {
+      content: "";
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: -1;
+
+      width: 100%;
+      height: 100%;
+
+      border-radius: 50%;
+      background-color: var(--c-white);
+
+      opacity: 0.1;
+      transform: translate(-50%, -50%);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &:is(:hover, :focus)::after {
+      transform: translate(-50%, -50%) scale(1.75);
+    }
+
     @media screen and (min-width: #{$breakpoint-tablet}) {
       --size: 240px;
 
