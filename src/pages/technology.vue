@@ -17,9 +17,12 @@
         class="main__gallery__item"
       >
         <picture class="main__gallery__item__image__wrapper">
-          <source media="(max-width: 768px)" :srcset="tech.images.landscape" />
+          <source
+            :media="`(min-width: ${breakpoints.DESKTOP}px)`"
+            :srcset="tech.images.portrait"
+          />
           <img
-            :src="tech.images.portrait"
+            :src="tech.images.landscape"
             :aria-label="tech.name"
             class="main__gallery__item__image"
             decoding="async"
@@ -66,6 +69,7 @@ import { useHead } from "@vueuse/head";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 
+import { breakpoints } from "../helpers/constants";
 import { technology } from "../assets/data.json";
 
 import VBackground from "../components/V-Background.vue";
