@@ -124,13 +124,26 @@ useHead({
     font-size: 0.9rem;
     letter-spacing: 2.7px;
     text-transform: uppercase;
+    text-align: center;
     color: var(--c-white);
+
+    width: 100%;
 
     margin-bottom: 1.75rem;
 
     &__dark {
       font-weight: 700;
       opacity: 0.25;
+    }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 1.1rem;
+      text-align: left;
+      letter-spacing: 3.5px;
+
+      padding: 0 2.125rem;
+      margin-top: 0.5rem;
+      margin-bottom: 3.5rem;
     }
   }
 
@@ -145,6 +158,10 @@ useHead({
         width: 101%;
         height: auto;
       }
+    }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      margin-bottom: 1.4rem;
     }
   }
 
@@ -223,6 +240,16 @@ useHead({
         height: unset;
         aspect-ratio: 1/1;
       }
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        --size: 3.3rem;
+
+        font-size: 1.125rem;
+      }
+    }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      margin-bottom: 2.45rem;
     }
   }
 
@@ -236,6 +263,11 @@ useHead({
     color: var(--c-pink);
 
     margin: 0 0 0.75rem;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 0.9rem;
+      letter-spacing: 2.7px;
+    }
   }
 
   &__name {
@@ -244,6 +276,13 @@ useHead({
     text-transform: uppercase;
 
     margin: 0 0 1rem;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 2.2rem;
+
+      margin-top: 0.2rem;
+      margin-bottom: 0.9rem;
+    }
   }
 
   &__description {
@@ -254,6 +293,17 @@ useHead({
 
     margin: 0;
     padding: 0 1rem;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 0.89rem;
+      line-height: 1.75;
+
+      max-width: 62%;
+    }
+  }
+
+  @media screen and (min-width: #{$breakpoint-tablet}) {
+    padding: 7rem 0 5.5rem;
   }
 }
 </style>
