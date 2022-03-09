@@ -106,10 +106,9 @@ useHead({
 
 <style scoped lang="scss">
 .main {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(6, fit-content);
+  // justify-items: center;
 
   position: relative;
   z-index: 0;
@@ -135,13 +134,24 @@ useHead({
       font-weight: 700;
       opacity: 0.25;
     }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      font-size: 1.1rem;
+      text-align: left;
+      letter-spacing: 3.5px;
+
+      margin-top: 0.5rem;
+      margin-bottom: 2.2rem;
+    }
   }
 
   &__gallery {
     width: 100%;
 
     &__item {
-      margin-top: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
 
       &__image {
         display: block;
@@ -157,7 +167,15 @@ useHead({
           justify-content: center;
           align-items: flex-end;
         }
+
+        @media screen and (min-width: #{$breakpoint-tablet}) {
+          width: 100%;
+          max-width: 80%;
+        }
       }
+    }
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      margin-top: 1.5rem;
     }
   }
 
@@ -166,6 +184,10 @@ useHead({
 
     margin: 0 0 1.1rem;
     border-color: #383b4b;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      display: none;
+    }
   }
 
   &__crew-selector {
@@ -208,6 +230,13 @@ useHead({
         opacity: 1;
       }
     }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      // offset of one item because of background image
+      grid-row: 6;
+
+      margin-top: 1.25rem;
+    }
   }
 
   &__role {
@@ -220,6 +249,13 @@ useHead({
 
     opacity: 0.5;
     margin-bottom: 0.5rem;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      // offset of one item because of background image
+      grid-row: 3;
+
+      font-size: 1.3rem;
+    }
   }
 
   &__name {
@@ -228,6 +264,13 @@ useHead({
     text-transform: uppercase;
 
     margin: 0 0 1rem;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      // offset of one item because of background image
+      grid-row: 4;
+
+      font-size: 2.2rem;
+    }
   }
 
   &__bio {
@@ -237,6 +280,20 @@ useHead({
     color: var(--c-pink);
 
     margin-top: 0;
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      // offset of one item because of background image
+      grid-row: 5;
+      justify-self: center;
+
+      font-size: 0.89rem;
+
+      max-width: 67%;
+    }
+  }
+
+  @media screen and (min-width: #{$breakpoint-tablet}) {
+    padding: 7rem 2.125rem 0;
   }
 }
 </style>
