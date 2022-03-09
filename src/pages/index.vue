@@ -11,11 +11,11 @@
         back, and relax because we’ll give you a truly out of this world
         experience!
       </p>
-
-      <RouterLink class="main__content__action" to="/destination">
-        <span class="main__content__action__text">Explore</span>
-      </RouterLink>
     </div>
+
+    <RouterLink class="main__content__action" to="/destination">
+      <span class="main__content__action__text">Explore</span>
+    </RouterLink>
   </main>
 </template>
 
@@ -29,19 +29,22 @@ useHead({ title: "Home | Space tourism website" });
 
 <style scoped lang="scss">
 .main {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+
   position: relative;
   z-index: 0;
+
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0 0 3rem;
 
   background-color: var(--c-black);
 
   &__content {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-direction: column;
-
-    min-height: 100vh;
-
     color: white;
     text-align: center;
 
@@ -54,7 +57,7 @@ useHead({ title: "Home | Space tourism website" });
       text-align: center;
       letter-spacing: 2.7px;
 
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
         font-size: 1.125rem;
@@ -68,7 +71,7 @@ useHead({ title: "Home | Space tourism website" });
       font-size: 4.25rem;
 
       text-transform: uppercase;
-      margin: 0 0 0.25rem;
+      margin: 0 0 1.25rem;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
         font-size: 8.1rem;
@@ -85,7 +88,7 @@ useHead({ title: "Home | Space tourism website" });
       line-height: 1.65;
       text-align: center;
 
-      margin-bottom: 4.5rem;
+      margin-bottom: 1.4rem;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
         font-size: 0.9rem;
@@ -107,7 +110,7 @@ useHead({ title: "Home | Space tourism website" });
       position: relative;
 
       font-family: "Bellefair", serif;
-      font-size: 1.125rem;
+      font-size: 1.1rem;
       letter-spacing: 1.25px;
       text-transform: uppercase;
       text-decoration: none;
