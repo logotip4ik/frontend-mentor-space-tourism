@@ -19,6 +19,7 @@
         />
       </Transition>
     </button>
+    <!-- TODO: rewrite how menu is toggled to prevent it showing when screen size is changing -->
     <Transition :css="false" @enter="showMenu" @leave="closeMenu">
       <ul
         v-show="isMenuOpened || width >= breakpoints.TABLET"
@@ -139,6 +140,7 @@ function closeMenu(el, onComplete) {
     color: var(--c-white);
     background-color: rgba($color: #4e4e4e, $alpha: 0.75);
 
+    list-style-type: none;
     transform: translateX(100%);
 
     @supports (backdrop-filter: blur(10px)) {
