@@ -28,7 +28,10 @@
         <li
           v-for="(link, key) in links"
           :key="key"
-          class="nav__navigation__item"
+          :class="{
+            nav__navigation__item: true,
+            'nav__navigation__item--active': route.path === link.to,
+          }"
           @click="isMenuOpened = false"
         >
           <RouterLink :to="link.to" class="nav__navigation__item__link">
@@ -42,6 +45,7 @@
 
 <script setup>
 import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import { gsap } from "gsap";
 
 import useWindowWidth from "../hooks/useWindowWidth";
@@ -51,6 +55,7 @@ import LogoSVG from "../assets/img/logo.svg";
 import HamburgerSVG from "../assets/img/icon-hamburger.svg";
 import CloseSVG from "../assets/img/icon-close.svg";
 
+const route = useRoute();
 const [width] = useWindowWidth();
 const isMenuOpened = ref(false);
 
@@ -94,14 +99,26 @@ function closeMenu(el, onComplete) {
   padding: var(--pd-y) 1.3rem;
 
   &__logo {
+    --size: 40px;
+
     width: 100%;
-    max-width: 40px;
+    max-width: var(--size);
     height: auto;
 
     @media screen and (min-width: #{$breakpoint-tablet}) {
-      margin-top: 0.25rem;
+      --size: 55px;
 
-      max-width: 55px;
+      margin-top: 0.35rem;
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      --size: 50px;
+
+      margin-top: 0.25rem;
+      margin-left: 3rem;
+      margin-right: 3rem;
     }
   }
 
@@ -149,6 +166,8 @@ function closeMenu(el, onComplete) {
     }
 
     &__item {
+      position: relative;
+
       width: 100%;
 
       font-size: 1rem;
@@ -161,45 +180,14 @@ function closeMenu(el, onComplete) {
       &__link {
         display: inline-block;
 
-        position: relative;
-
         width: 100%;
 
         color: currentColor;
         text-decoration: none;
         text-transform: uppercase;
 
-        &::after {
-          --pd-y: 5px;
-
-          content: "";
-
-          position: absolute;
-          right: 0;
-          top: calc(var(--pd-y) * -1);
-          bottom: calc(var(--pd-y) * -1);
-          width: 3px;
-
-          opacity: 0;
-          background-color: var(--c-white);
-          transition: opacity 300ms;
-
-          @media screen and (min-width: #{$breakpoint-tablet}) {
-            top: unset;
-            bottom: 0;
-            left: 0;
-
-            width: 100%;
-            height: 3px;
-          }
-        }
-
-        &:is(:focus, :hover)::after {
-          opacity: 0.5;
-        }
-
-        &.router-link-active::after {
-          opacity: 1;
+        @media screen and (min-width: #{$breakpoint-desktop}) {
+          width: unset;
         }
       }
 
@@ -208,16 +196,56 @@ function closeMenu(el, onComplete) {
       }
 
       &::marker {
+        content: "0" counter(list-item) "  ";
+
         font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 2.7px;
 
-        content: "0" counter(list-item) "  ";
         counter-increment: list-item;
 
         @media screen and (min-width: #{$breakpoint-tablet}) {
           content: none;
         }
+
+        @media screen and (min-width: #{$breakpoint-desktop}) {
+          content: "0" counter(list-item) "  ";
+
+          font-size: 0.88rem;
+        }
+      }
+
+      &::after {
+        --pd-y: 5px;
+
+        content: "";
+
+        position: absolute;
+        right: 0;
+        top: calc(var(--pd-y) * -1);
+        bottom: calc(var(--pd-y) * -1);
+        width: 3px;
+
+        opacity: 0;
+        background-color: var(--c-white);
+        transition: opacity 300ms;
+
+        @media screen and (min-width: #{$breakpoint-tablet}) {
+          top: unset;
+          bottom: 0;
+          left: 0;
+
+          width: 100%;
+          height: 3px;
+        }
+      }
+
+      &:is(:focus, :hover)::after {
+        opacity: 0.5;
+      }
+
+      &--active::after {
+        opacity: 1 !important;
       }
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
@@ -227,7 +255,8 @@ function closeMenu(el, onComplete) {
         letter-spacing: 2.3625px;
 
         margin: 0;
-        padding: 0 0.9rem;
+        margin-right: 2.1rem;
+        padding: 0;
 
         &:first-of-type {
           margin-left: 0;
@@ -235,6 +264,16 @@ function closeMenu(el, onComplete) {
         &:last-of-type {
           margin-right: 0;
         }
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        font-size: 0.85rem;
+        letter-spacing: 2.8px;
+        line-height: 6.2;
+
+        width: max-content;
+
+        margin-right: 2.55rem;
       }
     }
 
@@ -248,14 +287,25 @@ function closeMenu(el, onComplete) {
       width: auto;
       height: auto;
 
-      padding: 0 2rem 0;
+      padding: 0 2.5rem 0 2.5rem;
+    }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      padding: 0 11.5vw 0 8.25vw;
+
+      list-style-position: inside;
     }
   }
 
   @media screen and (min-width: #{$breakpoint-tablet}) {
     padding-top: 0;
     padding-right: 0;
-    padding-left: 2rem;
+    padding-left: 0;
+  }
+
+  @media screen and (min-width: #{$breakpoint-desktop}) {
+    padding-top: 2.125rem;
+    padding-left: 0;
   }
 }
 </style>
