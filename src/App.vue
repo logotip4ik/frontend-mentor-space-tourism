@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { gsap } from "gsap";
 
 import VNavbar from "./components/V-Navbar.vue";
@@ -44,7 +44,10 @@ function showContent(_, onComplete) {
 
   tl.to(".overlay svg", { opacity: 0 });
   tl.to(".overlay", { clipPath: "inset(0% 0% 0% 50%)", xPercent: 50 }, 0.125);
+  tl.set(".overlay", { clipPath: "inset(0% 50% 0% 0%)", xPercent: -50 });
 }
+
+onMounted(() => showContent());
 </script>
 
 <style lang="scss">
@@ -61,9 +64,6 @@ function showContent(_, onComplete) {
   width: 100%;
   height: 100%;
   background-color: var(--c-black);
-
-  clip-path: inset(0% 50% 0% 0%);
-  transform: translateX(-50%);
 
   &__img {
     --size: 3rem;
