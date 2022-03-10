@@ -1,5 +1,5 @@
 <template>
-  <picture>
+  <picture class="background-image__wrapper">
     <source
       :media="`(min-width: ${breakpoints.DESKTOP}px)`"
       :srcset="`/${props.name}/background-${props.name}-desktop.jpg`"
@@ -62,18 +62,25 @@ useHead({
 export default { inheritAttrs: false };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .background-image {
   display: block;
 
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
 
   object-fit: cover;
   object-position: center center;
+
+  &__wrapper {
+    display: block;
+
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>
