@@ -40,7 +40,7 @@ useHead({ title: "Home | Space tourism website" });
   min-height: 100vh;
 
   margin: 0;
-  padding: 0 0 3rem;
+  padding: 0 0 2.75rem;
 
   background-color: var(--c-black);
 
