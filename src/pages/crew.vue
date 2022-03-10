@@ -8,6 +8,7 @@
 
     <Swiper
       class="main__gallery"
+      :initial-slide="currentPersonIdx"
       @swiper="swiper = $event"
       @slide-change="currentPersonIdx = $event.activeIndex"
     >
@@ -28,38 +29,35 @@
       </SwiperSlide>
     </Swiper>
 
-    <hr class="main__hr" />
-
-    <ul class="main__crew-selector">
-      <li
-        v-for="(person, key) in crew"
-        :key="key"
-        :class="{
-          'main__crew-selector__item': true,
-          'main__crew-selector__item--active':
-            person.name === currentPerson.name,
-        }"
-        @click="currentPersonIdx = key"
-      ></li>
-    </ul>
-
-    <Transition mode="out-in" name="fade">
-      <p class="main__role d-50" :key="currentPersonIdx">
-        {{ currentPerson.role }}
-      </p>
-    </Transition>
-
-    <Transition mode="out-in" name="fade">
-      <h1 class="main__name d-25" :key="currentPersonIdx">
-        {{ currentPerson.name }}
-      </h1>
-    </Transition>
-
-    <Transition mode="out-in" name="fade">
-      <p class="main__bio d-50" :key="currentPersonIdx">
-        {{ currentPerson.bio }}
-      </p>
-    </Transition>
+    <div class="main__content">
+      <ul class="main__content__crew-selector">
+        <li
+          v-for="(person, key) in crew"
+          :key="key"
+          :class="{
+            'main__content__crew-selector__item': true,
+            'main__content__crew-selector__item--active':
+              person.name === currentPerson.name,
+          }"
+          @click="currentPersonIdx = key"
+        ></li>
+      </ul>
+      <Transition mode="out-in" name="fade">
+        <p class="main__content__role d-50" :key="currentPersonIdx">
+          {{ currentPerson.role }}
+        </p>
+      </Transition>
+      <Transition mode="out-in" name="fade">
+        <h1 class="main__content__name d-25" :key="currentPersonIdx">
+          {{ currentPerson.name }}
+        </h1>
+      </Transition>
+      <Transition mode="out-in" name="fade">
+        <p class="main__content__bio d-50" :key="currentPersonIdx">
+          {{ currentPerson.bio }}
+        </p>
+      </Transition>
+    </div>
   </main>
 </template>
 
@@ -77,7 +75,13 @@ import VBackground from "../components/V-Background.vue";
 const route = useRoute();
 const router = useRouter();
 const swiper = ref();
-const currentPersonIdx = ref(route.query.person || 0);
+const currentPersonIdx = ref(
+  !isNaN(route.query.person) &&
+    route.query.person < crew.length &&
+    route.query.person > 0
+    ? Number(route.query.person)
+    : 0
+);
 
 const currentPerson = computed(() => crew[currentPersonIdx.value]);
 
@@ -86,9 +90,7 @@ watch(currentPersonIdx, (val) => {
   swiper.value.slideTo(val);
 });
 
-onMounted(() => {
-  swiper.value.slideTo(currentPersonIdx.value, 0);
-});
+onMounted(() => (swiper.value.$wrapperEl[0].style.alignItems = "flex-end"));
 
 useHead({
   title: computed(() => `${currentPerson.value.name} | Space tourism website`),
@@ -107,8 +109,9 @@ useHead({
 <style scoped lang="scss">
 .main {
   display: grid;
-  grid-template-rows: repeat(6, fit-content);
-  // justify-items: center;
+  grid-template-rows: repeat(3, min-content);
+  justify-items: center;
+  align-items: flex-start;
 
   position: relative;
   z-index: 0;
@@ -118,7 +121,7 @@ useHead({
   text-align: center;
   color: var(--c-white);
 
-  padding: 4rem 1.5rem 1rem;
+  padding: 4.9rem 1.5rem 1rem;
   background-color: #090f1b;
 
   &__subheading {
@@ -128,7 +131,7 @@ useHead({
     text-transform: uppercase;
     color: var(--c-white);
 
-    margin-bottom: 0.85rem;
+    margin: 0;
 
     &__dark {
       font-weight: 700;
@@ -148,10 +151,15 @@ useHead({
   &__gallery {
     width: 100%;
 
+    padding-top: 1rem;
+
     &__item {
       display: flex;
       justify-content: center;
       align-items: flex-end;
+      flex-grow: 1;
+
+      height: max-content;
 
       &__image {
         display: block;
@@ -166,6 +174,8 @@ useHead({
           display: flex;
           justify-content: center;
           align-items: flex-end;
+
+          height: 100%;
         }
 
         @media screen and (min-width: #{$breakpoint-tablet}) {
@@ -174,121 +184,134 @@ useHead({
         }
       }
     }
+
+    &::after {
+      content: "";
+
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+
+      height: 1px;
+
+      background-color: #383b4b;
+    }
+
     @media screen and (min-width: #{$breakpoint-tablet}) {
       margin-top: 1.5rem;
+
+      &::after {
+        content: none;
+      }
     }
   }
 
-  &__hr {
-    width: 100%;
+  &__content {
+    &__crew-selector {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    margin: 0 0 1.1rem;
-    border-color: #383b4b;
+      padding: 1.8rem 0 0;
+      margin: 0;
+      list-style-type: none;
 
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      display: none;
-    }
-  }
+      &__item {
+        --size: 0.6rem;
 
-  &__crew-selector {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        width: var(--size);
+        height: var(--size);
 
-    padding: 0;
-    margin: 0.75rem 0 0.75rem;
-    list-style-type: none;
+        border-radius: 50%;
+        background-color: var(--c-white);
 
-    &__item {
-      --size: 0.6rem;
+        margin: 0 0.4rem;
 
-      width: var(--size);
-      height: var(--size);
+        opacity: 0.17;
+        cursor: pointer;
+        transition: opacity 300ms;
 
-      border-radius: 50%;
-      background-color: var(--c-white);
+        &:first-of-type {
+          margin-left: 0;
+        }
 
-      margin: 0 0.4rem;
+        &:last-of-type {
+          margin-right: 0;
+        }
 
-      opacity: 0.17;
-      cursor: pointer;
-      transition: opacity 300ms;
+        &:is(:focus, :hover) {
+          opacity: 0.5;
+        }
 
-      &:first-of-type {
-        margin-left: 0;
+        &--active {
+          opacity: 1;
+        }
       }
 
-      &:last-of-type {
-        margin-right: 0;
-      }
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        // offset of one item because of background image
+        grid-row: 6;
 
-      &:is(:focus, :hover) {
-        opacity: 0.5;
-      }
-
-      &--active {
-        opacity: 1;
+        margin-top: 1.25rem;
       }
     }
 
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      // offset of one item because of background image
-      grid-row: 6;
+    &__role {
+      font-family: "Bellefair", serif;
+      font-size: 0.9rem;
+      text-align: center;
+      text-transform: uppercase;
 
-      margin-top: 1.25rem;
+      color: var(--c-white);
+
+      padding: 1.75rem 0 0;
+      margin: 0;
+      opacity: 0.5;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        // offset of one item because of background image
+        grid-row: 3;
+
+        font-size: 1.3rem;
+      }
     }
-  }
 
-  &__role {
-    font-family: "Bellefair", serif;
-    font-size: 0.9rem;
-    text-align: center;
-    text-transform: uppercase;
-
-    color: var(--c-white);
-
-    opacity: 0.5;
-    margin-bottom: 0.5rem;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      // offset of one item because of background image
-      grid-row: 3;
-
+    &__name {
+      font-family: "Bellefair", serif;
       font-size: 1.3rem;
+      text-transform: uppercase;
+
+      padding: 0.5rem 0 0;
+      margin: 0;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        // offset of one item because of background image
+        grid-row: 4;
+
+        font-size: 2.2rem;
+      }
     }
-  }
 
-  &__name {
-    font-family: "Bellefair", serif;
-    font-size: 1.3rem;
-    text-transform: uppercase;
+    &__bio {
+      font-family: "Barlow", sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.67;
+      color: var(--c-pink);
 
-    margin: 0 0 1rem;
+      padding: 0.9rem 0 0;
+      margin: 0;
 
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      // offset of one item because of background image
-      grid-row: 4;
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        // offset of one item because of background image
+        grid-row: 5;
+        justify-self: center;
 
-      font-size: 2.2rem;
-    }
-  }
+        font-size: 0.89rem;
 
-  &__bio {
-    font-family: "Barlow", sans-serif;
-    font-size: 0.82rem;
-    line-height: 1.67;
-    color: var(--c-pink);
-
-    margin-top: 0;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      // offset of one item because of background image
-      grid-row: 5;
-      justify-self: center;
-
-      font-size: 0.89rem;
-
-      max-width: 67%;
+        max-width: 67%;
+      }
     }
   }
 
