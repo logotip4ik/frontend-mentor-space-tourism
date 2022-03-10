@@ -8,6 +8,7 @@
 
     <Swiper
       class="main__gallery"
+      :initial-slide="currentDestinationIdx"
       @swiper="swiper = $event"
       @slide-change="currentDestinationIdx = $event.activeIndex"
     >
@@ -108,10 +109,6 @@ const destination = computed(() => destinations[currentDestinationIdx.value]);
 watch(currentDestinationIdx, (val) => {
   router.replace({ path: "destination", query: { planet: val } });
   swiper.value.slideTo(val);
-});
-
-onMounted(() => {
-  swiper.value.slideTo(currentDestinationIdx.value, 0);
 });
 
 useHead({
