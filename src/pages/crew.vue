@@ -139,6 +139,8 @@ useHead({
     }
 
     @media screen and (min-width: #{$breakpoint-tablet}) {
+      justify-self: start;
+
       font-size: 1.1rem;
       text-align: left;
       letter-spacing: 3.5px;
@@ -200,7 +202,7 @@ useHead({
     }
 
     @media screen and (min-width: #{$breakpoint-tablet}) {
-      margin-top: 1.5rem;
+      padding-top: 2.25rem;
 
       &::after {
         content: none;
@@ -209,6 +211,9 @@ useHead({
   }
 
   &__content {
+    display: grid;
+    grid-template-rows: repeat(3, fit-content);
+
     &__crew-selector {
       display: flex;
       justify-content: center;
@@ -251,10 +256,9 @@ useHead({
       }
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
-        // offset of one item because of background image
-        grid-row: 6;
+        grid-row: 4;
 
-        margin-top: 1.25rem;
+        padding-top: 2.5rem;
       }
     }
 
@@ -271,10 +275,9 @@ useHead({
       opacity: 0.5;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
-        // offset of one item because of background image
-        grid-row: 3;
-
         font-size: 1.3rem;
+
+        padding-top: 1.3rem;
       }
     }
 
@@ -287,9 +290,6 @@ useHead({
       margin: 0;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
-        // offset of one item because of background image
-        grid-row: 4;
-
         font-size: 2.2rem;
       }
     }
@@ -304,14 +304,16 @@ useHead({
       margin: 0;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
-        // offset of one item because of background image
-        grid-row: 5;
         justify-self: center;
 
         font-size: 0.89rem;
 
         max-width: 67%;
       }
+    }
+
+    @media screen and (min-width: #{$breakpoint-tablet}) {
+      grid-row: 2;
     }
   }
 
