@@ -1,8 +1,8 @@
 <template>
-  <nav class="nav">
-    <router-link to="/">
+  <nav ref="nav" class="nav" :style="{ '--size': lineWidth }">
+    <RouterLink to="/" ref="navLogo">
       <LogoSVG alt="logo image" aria-label="website logo" class="nav__logo" />
-    </router-link>
+    </RouterLink>
     <button class="nav__menu-button" @click="isMenuOpened = !isMenuOpened">
       <Transition mode="out-in" name="fade">
         <HamburgerSVG
@@ -22,6 +22,7 @@
     <!-- TODO: rewrite how menu is toggled to prevent it showing when screen size is changing -->
     <Transition :css="false" @enter="showMenu" @leave="closeMenu">
       <ul
+        ref="navNavigation"
         v-show="isMenuOpened || width >= breakpoints.TABLET"
         class="nav__navigation"
       >
@@ -57,7 +58,12 @@ import CloseSVG from "../assets/img/icon-close.svg";
 
 const route = useRoute();
 const [width] = useWindowWidth();
+
+const navLogo = ref(null);
+const navNavigation = ref(null);
 const isMenuOpened = ref(false);
+
+const lineWidth = ref("1px");
 
 const links = [
   { to: "/", label: "Home" },
@@ -79,6 +85,20 @@ function showMenu(el, onComplete) {
 function closeMenu(el, onComplete) {
   gsap.to(el, { x: el.clientWidth, ease: "power3.out", onComplete });
 }
+
+watch(width, (val) => {
+  if (!navLogo.value || !navNavigation.value) return;
+
+  setTimeout(() => {
+    const logoPosition = navLogo.value.$el.getBoundingClientRect();
+    const navigationPosition = navNavigation.value.getBoundingClientRect();
+
+    const widthBetween = Math.abs(logoPosition.right - navigationPosition.left);
+    const offset = 20;
+
+    lineWidth.value = `${widthBetween + offset}px`;
+  }, 500);
+});
 </script>
 
 <style lang="scss">
@@ -294,6 +314,28 @@ function closeMenu(el, onComplete) {
       padding: 0 11.5vw 0 8.25vw;
 
       list-style-position: inside;
+    }
+  }
+
+  &::after {
+    content: none;
+
+    display: inline-block;
+
+    position: absolute;
+    top: 55%;
+    left: calc(60px + 6rem);
+
+    width: var(--size);
+    height: 1px;
+
+    opacity: 0.25;
+    background-color: var(--c-white);
+
+    transition: width 400ms;
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      content: "";
     }
   }
 
