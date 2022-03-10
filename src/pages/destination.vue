@@ -170,7 +170,7 @@ useHead({
       letter-spacing: 3.5px;
 
       margin-top: 0.5rem;
-      margin-bottom: 3.5rem;
+      margin-bottom: 2.5rem;
     }
 
     @media screen and (min-width: #{$breakpoint-desktop}) {
@@ -212,7 +212,7 @@ useHead({
         }
 
         @media screen and (min-width: #{$breakpoint-tablet}) {
-          --size: 43%;
+          max-width: 43%;
         }
 
         @media screen and (min-width: #{$breakpoint-desktop}) {
@@ -327,7 +327,7 @@ useHead({
       @media screen and (min-width: #{$breakpoint-tablet}) {
         font-size: 4.25rem;
 
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.35rem;
       }
 
       @media screen and (min-width: #{$breakpoint-desktop}) {
@@ -357,7 +357,7 @@ useHead({
 
         max-width: 81%;
 
-        margin-bottom: 2.25rem;
+        margin: 0 auto 2.75rem;
       }
 
       @media screen and (min-width: #{$breakpoint-desktop}) {
@@ -432,9 +432,8 @@ useHead({
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
         grid-auto-flow: column;
+        justify-content: center;
         gap: 5.75rem;
-
-        align-self: start;
       }
 
       @media screen and (min-width: #{$breakpoint-desktop}) {
