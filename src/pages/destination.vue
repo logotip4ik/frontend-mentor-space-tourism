@@ -28,49 +28,63 @@
       </SwiperSlide>
     </Swiper>
 
-    <ul class="main__planet-selector">
-      <li
-        v-for="(planet, key) in destinations"
-        :key="planet.name"
-        :class="{
-          'main__planet-selector__item': true,
-          'main__planet-selector__item--active':
-            destination.name === planet.name,
-        }"
-        @click="currentDestinationIdx = key"
-      >
-        {{ planet.name }}
-      </li>
-    </ul>
-
-    <Transition mode="out-in" name="fade">
-      <h1 class="main__heading d-25" :key="currentDestinationIdx">
-        {{ destination.name }}
-      </h1>
-    </Transition>
-
-    <Transition mode="out-in" name="fade">
-      <p class="main__description d-50" :key="currentDestinationIdx">
-        {{ destination.description }}
-      </p>
-    </Transition>
-
-    <hr class="main__hr" />
-
-    <ul class="main__info-list">
-      <Transition mode="out-in" name="fade">
-        <li class="main__info-list__item d-75" :key="currentDestinationIdx">
-          <p class="main__info-list__item__heading">Avg. distance</p>
-          <p class="main__info-list__item__info">{{ destination.distance }}</p>
+    <div class="main__content">
+      <ul class="main__content__planet-selector">
+        <li
+          v-for="(planet, key) in destinations"
+          :key="planet.name"
+          :class="{
+            'main__content__planet-selector__item': true,
+            'main__content__planet-selector__item--active':
+              destination.name === planet.name,
+          }"
+          @click="currentDestinationIdx = key"
+        >
+          {{ planet.name }}
         </li>
-      </Transition>
+      </ul>
+
       <Transition mode="out-in" name="fade">
-        <li class="main__info-list__item d-100" :key="currentDestinationIdx">
-          <p class="main__info-list__item__heading">Est. travel time</p>
-          <p class="main__info-list__item__info">{{ destination.travel }}</p>
-        </li>
+        <h1 class="main__content__heading d-25" :key="currentDestinationIdx">
+          {{ destination.name }}
+        </h1>
       </Transition>
-    </ul>
+
+      <Transition mode="out-in" name="fade">
+        <p class="main__content__description d-50" :key="currentDestinationIdx">
+          {{ destination.description }}
+        </p>
+      </Transition>
+
+      <hr class="main__content__hr" />
+
+      <ul class="main__content__info-list">
+        <Transition mode="out-in" name="fade">
+          <li
+            class="main__content__info-list__item d-75"
+            :key="currentDestinationIdx"
+          >
+            <p class="main__content__info-list__item__heading">Avg. distance</p>
+            <p class="main__content__info-list__item__info">
+              {{ destination.distance }}
+            </p>
+          </li>
+        </Transition>
+        <Transition mode="out-in" name="fade">
+          <li
+            class="main__content__info-list__item d-100"
+            :key="currentDestinationIdx"
+          >
+            <p class="main__content__info-list__item__heading">
+              Est. travel time
+            </p>
+            <p class="main__content__info-list__item__info">
+              {{ destination.travel }}
+            </p>
+          </li>
+        </Transition>
+      </ul>
+    </div>
   </main>
 </template>
 
@@ -116,10 +130,10 @@ useHead({
 
 <style scoped lang="scss">
 .main {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(3, min-content);
+  justify-items: center;
+  align-items: flex-start;
 
   position: relative;
   z-index: 0;
@@ -143,7 +157,7 @@ useHead({
 
     width: 100%;
 
-    margin-bottom: 1.8rem;
+    margin-bottom: 0.75rem;
 
     &__dark {
       font-weight: 700;
@@ -158,10 +172,20 @@ useHead({
       margin-top: 0.5rem;
       margin-bottom: 3.5rem;
     }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      grid-row: 1;
+      grid-column: span 2;
+
+      font-size: 1.76rem;
+
+      margin-bottom: 0.5rem;
+    }
   }
 
   &__gallery {
     width: 100%;
+    padding-top: 1rem;
     margin-bottom: 0.5rem;
 
     &__item {
@@ -173,20 +197,26 @@ useHead({
 
         display: block;
 
-        width: 100%;
+        width: 53%;
         height: auto;
 
-        max-width: var(--size);
-        max-height: var(--size);
+        max-width: 100%;
+        max-height: 100%;
 
         &__wrapper {
           display: flex;
           justify-content: center;
           align-items: center;
+
+          height: 100%;
         }
 
         @media screen and (min-width: #{$breakpoint-tablet}) {
           --size: 43%;
+        }
+
+        @media screen and (min-width: #{$breakpoint-desktop}) {
+          --size: 77%;
         }
       }
     }
@@ -194,155 +224,238 @@ useHead({
     @media screen and (min-width: #{$breakpoint-tablet}) {
       margin-bottom: 2.125rem;
     }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      grid-column: 1;
+      grid-row: 2 / span 5;
+
+      margin-bottom: 0;
+    }
   }
 
-  &__planet-selector {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &__content {
+    &__planet-selector {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    padding: 0;
-    margin-bottom: 2rem;
-    list-style-type: none;
+      padding: 1.1rem 0 0;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      list-style-type: none;
 
-    &__item {
-      position: relative;
+      &__item {
+        position: relative;
 
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 2.3px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 2.3px;
+        text-transform: uppercase;
+        line-height: 1;
+
+        margin: 0 0.75rem;
+
+        cursor: pointer;
+
+        &:first-of-type {
+          margin-left: 0;
+        }
+
+        &:last-of-type {
+          margin-right: 0;
+        }
+
+        &::after {
+          --y-offset: 0.5rem;
+          content: "";
+
+          position: absolute;
+          top: calc(100% + var(--y-offset));
+          left: 0;
+
+          width: 100%;
+          height: 3px;
+
+          opacity: 0;
+          pointer-events: none;
+          background-color: var(--c-white);
+
+          transition: opacity 300ms;
+
+          @media screen and (min-width: #{$breakpoint-desktop}) {
+            --y-offset: 0.7rem;
+          }
+        }
+
+        &:is(:focus, :hover)::after {
+          opacity: 0.5;
+        }
+
+        &--active::after {
+          opacity: 1;
+        }
+
+        @media screen and (min-width: #{$breakpoint-tablet}) {
+          font-size: 1rem;
+
+          margin: 0 0.85rem 0.85rem;
+        }
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        --y-padding: 0.4rem;
+
+        grid-row: 2;
+        justify-self: start;
+
+        padding-top: var(--y-padding);
+        padding-bottom: var(--y-padding);
+
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    &__heading {
       text-transform: uppercase;
-      line-height: 1;
+      font-family: "Bellefair", serif;
+      font-size: 3.1rem;
 
-      margin: 0 0.75rem;
-
-      cursor: pointer;
-
-      &:first-of-type {
-        margin-left: 0;
-      }
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-
-      &::after {
-        --y-offset: 0.5rem;
-        content: "";
-
-        position: absolute;
-        top: calc(100% + var(--y-offset));
-        left: 0;
-
-        width: 100%;
-        height: 3px;
-
-        opacity: 0;
-        pointer-events: none;
-        background-color: var(--c-white);
-
-        transition: opacity 300ms;
-      }
-
-      &:is(:focus, :hover)::after {
-        opacity: 0.5;
-      }
-
-      &--active::after {
-        opacity: 1;
-      }
+      padding-top: 1rem;
+      margin: 0;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 4.25rem;
+
+        margin-bottom: 0.5rem;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        grid-row: 3;
+        justify-self: start;
+
+        font-size: 5.4rem;
+        line-height: 0.5;
+
+        margin-top: 2.5rem;
+        margin-bottom: 0;
+      }
+    }
+
+    &__description {
+      font-family: "Barlow", sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.67;
+      color: var(--c-pink);
+
+      padding: 0.25rem 0 0;
+      margin-top: 0;
+      margin-bottom: 1.75rem;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 0.9rem;
+
+        max-width: 81%;
+
+        margin-bottom: 2.25rem;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        grid-row: 4;
+        justify-self: start;
+
         font-size: 1rem;
+        text-align: left;
+        line-height: 1.78;
 
-        margin: 0 0.85rem 0.85rem;
+        max-width: 100%;
+        height: min-content;
+
+        margin-bottom: 0.6rem;
       }
     }
-  }
 
-  &__heading {
-    text-transform: uppercase;
-    font-family: "Bellefair", serif;
-    font-size: 3.1rem;
+    &__hr {
+      width: 100%;
 
-    margin: 0;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      font-size: 4.25rem;
-
-      margin-bottom: 0.5rem;
-    }
-  }
-
-  &__description {
-    font-family: "Barlow", sans-serif;
-    font-size: 0.82rem;
-    line-height: 1.67;
-    color: var(--c-pink);
-
-    margin-top: 0;
-    margin-bottom: 1.25rem;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      font-size: 0.9rem;
-
-      max-width: 81%;
-
-      margin-bottom: 2.25rem;
-    }
-  }
-
-  &__hr {
-    width: 100%;
-
-    margin-bottom: 1rem;
-    border-color: #383b4b;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      max-width: 82%;
-
-      margin-bottom: 0.8rem;
-    }
-  }
-
-  &__info-list {
-    display: grid;
-    grid-template-rows: repeat(2, fit-content);
-    grid-auto-flow: row;
-
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-
-    &__item {
       margin-bottom: 1rem;
+      border-color: #383b4b;
 
-      &__heading {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 0.77rem;
-        text-align: center;
-        letter-spacing: 2.4px;
-        text-transform: uppercase;
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        max-width: 82%;
+
+        margin-bottom: 0.8rem;
       }
 
-      &__info {
-        font-family: "Bellefair", serif;
-        font-size: 1.5rem;
-        text-align: center;
-        text-transform: uppercase;
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        grid-row: 5;
+        justify-self: start;
 
+        line-height: 0;
+
+        max-width: 100%;
+
+        padding: 0;
         margin: 0;
       }
     }
 
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      grid-auto-flow: column;
-      gap: 5.75rem;
+    &__info-list {
+      display: grid;
+      grid-template-rows: repeat(2, fit-content);
+      grid-auto-flow: row;
+
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+
+      &__item {
+        margin-bottom: 1rem;
+
+        &__heading {
+          font-family: "Barlow Condensed", sans-serif;
+          font-size: 0.77rem;
+          text-align: center;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+        }
+
+        &__info {
+          font-family: "Bellefair", serif;
+          font-size: 1.5rem;
+          text-align: center;
+          text-transform: uppercase;
+
+          margin: 0;
+        }
+      }
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        grid-auto-flow: column;
+        gap: 5.75rem;
+
+        align-self: start;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        grid-row: 6;
+        justify-self: start;
+
+        // margin-top: -2rem;
+      }
     }
   }
 
   @media screen and (min-width: #{$breakpoint-tablet}) {
     padding: 7rem 2.125rem 1rem;
+  }
+
+  @media screen and (min-width: #{$breakpoint-desktop}) {
+    column-gap: 4vw;
+    grid-template-rows: fit-content repeat(4, min-content);
+    grid-template-columns: 55% auto;
+
+    padding: 11.2rem 11.5vw 3rem;
   }
 }
 </style>
