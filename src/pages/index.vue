@@ -185,7 +185,7 @@ useHead({ title: "Home | Space tourism website" });
     }
 
     &:is(:hover, :focus)::after {
-      transform: translate(-50%, -50%) scale(1.75);
+      transform: translate(-50%, -50%) scale(1.55);
     }
 
     @media screen and (min-width: #{$breakpoint-tablet}) {
