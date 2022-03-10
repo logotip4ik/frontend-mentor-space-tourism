@@ -89,6 +89,7 @@ useHead({ title: "Home | Space tourism website" });
 
       @media screen and (min-width: #{$breakpoint-desktop}) {
         text-align: left;
+        font-size: clamp(5.16rem, calc(4.03rem + 4.84vw), 8.38rem);
 
         margin-bottom: 1.4rem;
       }
