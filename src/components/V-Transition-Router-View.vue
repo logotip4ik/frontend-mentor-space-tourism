@@ -48,8 +48,6 @@ function showContent(_, onComplete) {
   );
   tl.set(overlay.value, { clipPath: "inset(0% 50% 0% 0%)", xPercent: -50 });
 }
-
-onMounted(() => showContent());
 </script>
 
 <style lang="scss">
@@ -66,6 +64,9 @@ onMounted(() => showContent());
   width: 100%;
   height: 100%;
   background-color: var(--c-black);
+
+  transform: translateX(-50%);
+  clip-path: inset(0% 50% 0% 0%);
 
   &__img {
     --size: 3rem;
