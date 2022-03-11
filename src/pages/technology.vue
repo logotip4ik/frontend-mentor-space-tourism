@@ -32,33 +32,36 @@
       </SwiperSlide>
     </Swiper>
 
-    <ul class="main__tech-selector">
-      <li
-        v-for="(tech, key) in technology"
-        :key="key"
-        :class="{
-          'main__tech-selector__item': true,
-          'main__tech-selector__item--active': tech.name === currentTech.name,
-        }"
-        @click="currentTechIdx = key"
-      >
-        {{ `${key + 1}` }}
-      </li>
-    </ul>
+    <div class="main__content">
+      <ul class="main__content__tech-selector">
+        <li
+          v-for="(tech, key) in technology"
+          :key="key"
+          :class="{
+            'main__content__tech-selector__item': true,
+            'main__content__tech-selector__item--active':
+              tech.name === currentTech.name,
+          }"
+          @click="currentTechIdx = key"
+        >
+          {{ `${key + 1}` }}
+        </li>
+      </ul>
 
-    <p class="main__terminology">The terminology...</p>
+      <p class="main__content__terminology">The terminology...</p>
 
-    <Transition mode="out-in" name="fade">
-      <h1 class="main__name" :key="currentTechIdx">
-        {{ currentTech.name }}
-      </h1>
-    </Transition>
+      <Transition mode="out-in" name="fade">
+        <h1 class="main__content__name" :key="currentTechIdx">
+          {{ currentTech.name }}
+        </h1>
+      </Transition>
 
-    <Transition mode="out-in" name="fade">
-      <p class="main__description d-25" :key="currentTechIdx">
-        {{ currentTech.description }}
-      </p>
-    </Transition>
+      <Transition mode="out-in" name="fade">
+        <p class="main__content__description d-25" :key="currentTechIdx">
+          {{ currentTech.description }}
+        </p>
+      </Transition>
+    </div>
   </main>
 </template>
 
@@ -107,10 +110,10 @@ useHead({
 
 <style scoped lang="scss">
 .main {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(3, min-content);
+  justify-items: center;
+  align-items: flex-start;
 
   position: relative;
   z-index: 0;
@@ -169,143 +172,148 @@ useHead({
     }
   }
 
-  &__tech-selector {
-    --spacing: 1.5rem;
+  &__content {
+    padding: 0 1rem;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 0;
-    margin: var(--spacing) 0 var(--spacing);
-    list-style-type: none;
-
-    &__item {
-      --size: 2.25rem;
+    &__tech-selector {
+      --spacing: 1.5rem;
 
       display: flex;
       justify-content: center;
       align-items: center;
 
-      position: relative;
-      z-index: 0;
+      padding: 0;
+      margin: var(--spacing) 0 var(--spacing);
+      list-style-type: none;
 
-      font-family: "Bellefair", serif;
-      font-size: 0.9rem;
-      text-align: center;
+      &__item {
+        --size: 2.25rem;
 
-      width: var(--size);
-      height: var(--size);
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-      margin: 0 0.45rem;
+        position: relative;
+        z-index: 0;
 
-      cursor: pointer;
-      transition: color 300ms;
+        font-family: "Bellefair", serif;
+        font-size: 0.9rem;
+        text-align: center;
 
-      &:first-of-type {
-        margin-left: 0;
-      }
+        width: var(--size);
+        height: var(--size);
 
-      &:last-of-type {
-        margin-right: 0;
-      }
+        margin: 0 0.45rem;
 
-      &::after {
-        content: "";
+        cursor: pointer;
+        transition: color 300ms;
 
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
+        &:first-of-type {
+          margin-left: 0;
+        }
 
-        opacity: 0.25;
-        background-color: transparent;
-        border: 1px solid var(--c-white);
-        border-radius: 50%;
+        &:last-of-type {
+          margin-right: 0;
+        }
 
-        transition: opacity 300ms, background-color 300ms;
-      }
-
-      &:is(:focus, :hover)::after {
-        opacity: 1;
-      }
-
-      &--active {
-        color: var(--c-black);
         &::after {
+          content: "";
+
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: -1;
+
+          opacity: 0.25;
+          background-color: transparent;
+          border: 1px solid var(--c-white);
+          border-radius: 50%;
+
+          transition: opacity 300ms, background-color 300ms;
+        }
+
+        &:is(:focus, :hover)::after {
           opacity: 1;
-          background-color: var(--c-white);
+        }
+
+        &--active {
+          color: var(--c-black);
+          &::after {
+            opacity: 1;
+            background-color: var(--c-white);
+          }
+        }
+
+        @supports (aspect-ratio: 1/1) {
+          height: unset;
+          aspect-ratio: 1/1;
+        }
+
+        @media screen and (min-width: #{$breakpoint-tablet}) {
+          --size: 3.3rem;
+
+          font-size: 1.125rem;
         }
       }
 
-      @supports (aspect-ratio: 1/1) {
-        height: unset;
-        aspect-ratio: 1/1;
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        margin-bottom: 2.45rem;
       }
+    }
+
+    &__terminology {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 0.8rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2.4px;
+
+      color: var(--c-pink);
+
+      margin: 0 0 0.75rem;
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
-        --size: 3.3rem;
-
-        font-size: 1.125rem;
+        font-size: 0.9rem;
+        letter-spacing: 2.7px;
       }
     }
 
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      margin-bottom: 2.45rem;
+    &__name {
+      font-family: "Bellefair", serif;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+
+      margin: 0 0 1rem;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 2.2rem;
+
+        margin-top: 1rem;
+        margin-bottom: 0.9rem;
+      }
+    }
+
+    &__description {
+      font-family: "Barlow", sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.67;
+      color: var(--c-pink);
+
+      margin: 0;
+      padding: 0;
+
+      @media screen and (min-width: #{$breakpoint-tablet}) {
+        font-size: 0.89rem;
+        line-height: 1.75;
+
+        max-width: 62%;
+
+        margin: 0 auto;
+      }
     }
   }
-
-  &__terminology {
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: 0.8rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2.4px;
-
-    color: var(--c-pink);
-
-    margin: 0 0 0.75rem;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      font-size: 0.9rem;
-      letter-spacing: 2.7px;
-    }
-  }
-
-  &__name {
-    font-family: "Bellefair", serif;
-    font-size: 1.3rem;
-    text-transform: uppercase;
-
-    margin: 0 0 1rem;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      font-size: 2.2rem;
-
-      margin-top: 0.2rem;
-      margin-bottom: 0.9rem;
-    }
-  }
-
-  &__description {
-    font-family: "Barlow", sans-serif;
-    font-size: 0.82rem;
-    line-height: 1.67;
-    color: var(--c-pink);
-
-    margin: 0;
-    padding: 0 1rem;
-
-    @media screen and (min-width: #{$breakpoint-tablet}) {
-      font-size: 0.89rem;
-      line-height: 1.75;
-
-      max-width: 62%;
-    }
-  }
-
   @media screen and (min-width: #{$breakpoint-tablet}) {
     padding: 7rem 0 5.5rem;
   }
