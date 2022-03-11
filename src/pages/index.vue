@@ -204,7 +204,7 @@ useHead({ title: "Home | Space tourism website" });
     align-items: flex-end;
     flex-direction: row;
 
-    padding: 0 11.5vmax 15vh;
+    padding: 25vh 11.5vmax 15vh;
   }
 }
 </style>
