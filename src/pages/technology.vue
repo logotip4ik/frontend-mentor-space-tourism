@@ -152,6 +152,16 @@ useHead({
       margin-top: 0.5rem;
       margin-bottom: 3.5rem;
     }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      grid-row: 1;
+      grid-column: span 2;
+
+      font-size: 1.73rem;
+
+      margin: 0;
+      padding-top: 0.15rem;
+    }
   }
 
   &__gallery {
@@ -169,6 +179,12 @@ useHead({
 
     @media screen and (min-width: #{$breakpoint-tablet}) {
       margin-bottom: 1.4rem;
+    }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      grid-column: 2;
+
+      padding-top: 0.5rem;
     }
   }
 
@@ -256,10 +272,36 @@ useHead({
 
           font-size: 1.125rem;
         }
+
+        @media screen and (min-width: #{$breakpoint-desktop}) {
+          --size: 4.5rem;
+
+          font-size: 2rem;
+
+          margin: 0.9rem 0;
+
+          &:first-of-type {
+            margin-top: 0;
+          }
+
+          &:last-of-type {
+            margin-left: 0;
+          }
+        }
       }
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
         margin-bottom: 2.45rem;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        grid-area: span 3/ 1;
+
+        justify-content: space-between;
+        flex-direction: column;
+
+        margin: 0;
+        padding-left: 1rem;
       }
     }
 
@@ -278,6 +320,12 @@ useHead({
         font-size: 0.9rem;
         letter-spacing: 2.7px;
       }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        justify-self: start;
+
+        margin: 0;
+      }
     }
 
     &__name {
@@ -292,6 +340,16 @@ useHead({
 
         margin-top: 1rem;
         margin-bottom: 0.9rem;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        justify-self: start;
+
+        font-size: 3rem;
+        line-height: 0.9;
+
+        margin: 0;
+        padding-top: 0;
       }
     }
 
@@ -312,10 +370,41 @@ useHead({
 
         margin: 0 auto;
       }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        justify-self: start;
+
+        font-size: 1rem;
+        text-align: left;
+
+        max-width: 85%;
+
+        margin: 0;
+      }
+    }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      display: grid;
+      grid-template-columns: min-content auto;
+      grid-template-rows: repeat(3, min-content);
+      column-gap: 5.5vw;
+
+      align-self: center;
+      grid-area: 2 / 1;
     }
   }
+
   @media screen and (min-width: #{$breakpoint-tablet}) {
     padding: 7rem 0 5.5rem;
+  }
+
+  @media screen and (min-width: #{$breakpoint-desktop}) {
+    column-gap: 4vw;
+
+    grid-template-rows: 3rem auto;
+    grid-template-columns: 56.25% auto;
+
+    padding: 11.5rem 0 8vh min(9vw, 7.5rem);
   }
 }
 </style>
