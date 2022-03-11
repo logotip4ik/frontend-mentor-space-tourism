@@ -148,6 +148,16 @@ useHead({
       margin-top: 0.5rem;
       margin-bottom: 2.2rem;
     }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      grid-row: 1;
+      grid-column: span 2;
+
+      font-size: 1.73rem;
+
+      margin: 0;
+      padding-top: 0.125rem;
+    }
   }
 
   &__gallery {
@@ -184,6 +194,10 @@ useHead({
           width: 100%;
           max-width: 80%;
         }
+
+        @media screen and (min-width: #{$breakpoint-desktop}) {
+          max-width: 600px;
+        }
       }
     }
 
@@ -207,6 +221,12 @@ useHead({
       &::after {
         content: none;
       }
+    }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      grid-row: 1 / span 2;
+
+      height: 100%;
     }
   }
 
@@ -253,12 +273,24 @@ useHead({
         &--active {
           opacity: 1;
         }
+
+        @media screen and (min-width: #{$breakpoint-desktop}) {
+          --size: 0.8rem;
+
+          margin: 0 0.75rem 0;
+        }
       }
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
         grid-row: 4;
 
         padding-top: 2.5rem;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        justify-self: start;
+
+        padding-bottom: 1.75rem;
       }
     }
 
@@ -279,6 +311,15 @@ useHead({
 
         padding-top: 1.3rem;
       }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        align-content: start;
+
+        font-size: 1.75rem;
+        text-align: left;
+
+        padding: 0;
+      }
     }
 
     &__name {
@@ -291,6 +332,13 @@ useHead({
 
       @media screen and (min-width: #{$breakpoint-tablet}) {
         font-size: 2.2rem;
+      }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        font-size: 3rem;
+        text-align: left;
+
+        padding: 1rem 0 0;
       }
     }
 
@@ -310,15 +358,45 @@ useHead({
 
         max-width: 67%;
       }
+
+      @media screen and (min-width: #{$breakpoint-desktop}) {
+        justify-self: start;
+
+        font-size: 1rem;
+        text-align: left;
+        line-height: 1.75;
+
+        max-width: 80%;
+
+        padding: 1.45rem 0 0;
+      }
     }
 
     @media screen and (min-width: #{$breakpoint-tablet}) {
       grid-row: 2;
     }
+
+    @media screen and (min-width: #{$breakpoint-desktop}) {
+      grid-template-rows: repeat(3, min-content) auto;
+      justify-self: start;
+
+      height: 100%;
+
+      padding-top: 15.5vh;
+    }
   }
 
   @media screen and (min-width: #{$breakpoint-tablet}) {
     padding: 7rem 2.125rem 0;
+  }
+
+  @media screen and (min-width: #{$breakpoint-desktop}) {
+    column-gap: 2vw;
+
+    grid-template-rows: 3rem auto;
+    grid-template-columns: 50% auto;
+
+    padding: 11.5rem 11.5vw 0;
   }
 }
 </style>
