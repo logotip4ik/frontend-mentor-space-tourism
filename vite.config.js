@@ -13,7 +13,18 @@ const breakpointsString = Object.entries(breakpoints).reduce(
 
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
-  plugins: [Vue(), Pages(), ViteSvgLoader()],
+  plugins: [
+    {
+      name: "remove-swiper",
+      transform(code, id, options = {}) {
+        if (options.ssr)
+          return code.replace(/import .swiper\/(s?css|less).*$/gm, "");
+      },
+    },
+    Vue(),
+    Pages(),
+    ViteSvgLoader(),
+  ],
   ssgOptions: {
     script: "async",
     formatting: process.env.NODE_ENV === "production" ? "minify" : "prettify",
