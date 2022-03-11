@@ -24,7 +24,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Github](https://github.com/logotip4ik/frontend-mentor-space-tourism)
-- Live Site URL: [Space Tourism](https://your-live-site-url.com)
+- Live Site URL: [Space Tourism](https://space-tourism-bogdankostyuk.vercel.app)
 
 ## My process
 
